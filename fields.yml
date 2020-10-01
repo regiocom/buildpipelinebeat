@@ -6084,8 +6084,28 @@
   title: buildpipelinebeat
   description:
   fields:
-    - name: counter
-      type: long
+    - name: team
+      type: text
       required: true
       description: >
-        PLEASE UPDATE DOCUMENTATION
+        The teamname
+    - name: status
+      type: text
+      required: true
+      description: >
+        The build status
+    - name: pipeline
+      type: text
+      required: true
+      description: >
+        The pipeline/job that got executed
+    - name: project
+      type: text
+      required: true
+      description: >
+        The project that got build
+    - name: error
+      type: text
+      required: true
+      decription: >
+        The exception that got thrown

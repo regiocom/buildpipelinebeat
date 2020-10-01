@@ -94,13 +94,58 @@ type: keyword
 None
 
 
-*`counter`*::
+*`team`*::
 +
 --
-PLEASE UPDATE DOCUMENTATION
+The teamname
 
 
-type: long
+type: text
+
+required: True
+
+--
+
+*`status`*::
++
+--
+The build status
+
+
+type: text
+
+required: True
+
+--
+
+*`pipeline`*::
++
+--
+The pipeline/job that got executed
+
+
+type: text
+
+required: True
+
+--
+
+*`project`*::
++
+--
+The project that got build
+
+
+type: text
+
+required: True
+
+--
+
+*`error`*::
++
+--
+type: text
 
 required: True
 

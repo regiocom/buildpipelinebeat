@@ -1,5 +1,9 @@
 buildpipelinebeat:
-  period: 1s
+  team: defaultTeam
+  status: Failure
+  pipeline: fallbackPipeline
+  project: fallbackProject
+  error: None
 
 processors:
   - add_cloud_metadata: ~
