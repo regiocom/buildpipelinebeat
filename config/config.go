@@ -3,12 +3,14 @@
 
 package config
 
-import "time"
-
+// Config Structure
 type Config struct {
-	Period time.Duration `config:"period"`
+	Team     string `config:"team"`
+	Status   string `config:"status"`
+	Pipeline string `config:"pipeline"`
+	Project  string `config:"project"`
+	Error    string `config:"error"`
 }
 
-var DefaultConfig = Config{
-	Period: 1 * time.Second,
-}
+// DefaultConfig Default Values
+var DefaultConfig = Config{}

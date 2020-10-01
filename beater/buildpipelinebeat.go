@@ -1,6 +1,9 @@
 package beater
 
 import (
+	// Custom Imports
+
+	// Default Import
 	"fmt"
 	"time"
 
@@ -42,26 +45,31 @@ func (bt *buildpipelinebeat) Run(b *beat.Beat) error {
 		return err
 	}
 
-	ticker := time.NewTicker(bt.config.Period)
-	counter := 1
-	for {
-		select {
-		case <-bt.done:
-			return nil
-		case <-ticker.C:
-		}
+	// Variables
+	Status := bt.config.Status
+	TeamName := bt.config.Team
+	Project := bt.config.Project
+	Pipeline := bt.config.Pipeline
+	Error := bt.config.Error
 
-		event := beat.Event{
-			Timestamp: time.Now(),
-			Fields: common.MapStr{
-				"type":    b.Info.Name,
-				"counter": counter,
-			},
-		}
-		bt.client.Publish(event)
-		logp.Info("Event sent")
-		counter++
+	// Prepare the Event
+	event := beat.Event{
+		Timestamp: time.Now(),
+		Fields: common.MapStr{
+			"type":     b.Info.Name,
+			"team":     TeamName,
+			"pipeline": Pipeline,
+			"project":  Project,
+			"status":   Status,
+			"error":    Error,
+		},
 	}
+
+	// Push the event and stop the beat
+	bt.client.Publish(event)
+	logp.Info("Event sent")
+	close(bt.done)
+	return nil
 }
 
 // Stop stops buildpipelinebeat.

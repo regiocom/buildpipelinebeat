@@ -3,9 +3,17 @@
 ############################# {Beat} ######################################
 
 buildpipelinebeat:
-  # Defines how often an event is sent to the output
-  period: 1s
-
+  # The Teamname
+  team: defaultTeam
+  # Fallback Buildstatus
+  status: Failure
+  # Pipleine
+  pipeline: fallbackPipeline
+  # Project
+  project: fallbackProject
+  # The Fallback Error
+  error: None
+  
 # ================================== General ===================================
 
 # The name of the shipper that publishes the network data. It can be used to group
