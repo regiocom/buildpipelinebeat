@@ -32,6 +32,8 @@ before_install:
   # Redo the travis setup but with the elastic/libbeat path. This is needed so the package path is correct
   - mkdir -p $HOME/gopath/src/github.com/magefile/
   - cd $HOME/gopath/src/github.com/magefile/
+  - git clone --depth 1 https://github.com/magefile/mage
+  - cd mage
   - go run bootstrap.go
   - mkdir -p $HOME/gopath/src/github.com/regiocom/buildpipelinebeat/
   - rsync -az ${TRAVIS_BUILD_DIR}/ $HOME/gopath/src/github.com/regiocom/buildpipelinebeat/
