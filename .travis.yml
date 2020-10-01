@@ -25,7 +25,7 @@ env:
 addons:
   apt:
     packages:
-      - python-virtualenv
+      - python3-virtualenv
 
 before_install:
   - umask 022
