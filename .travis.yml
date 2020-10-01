@@ -10,7 +10,6 @@ go:
 
 os:
   - linux
-  - osx
 
 env:
   matrix:
@@ -43,6 +42,8 @@ before_install:
 
 script:
   - mage $TARGETS
+  - ls -al
+  - find -perm /u=x
 
 after_success:
   # Copy full.cov to coverage.txt because codecov.io requires this file
@@ -50,7 +51,7 @@ after_success:
 deploy:
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
-  file: "FILE TO UPLOAD"
+  file: 
   skip_cleanup: true
   on:
     tags: true
