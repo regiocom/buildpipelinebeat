@@ -1,0 +1,5 @@
+= buildpipelinebeat Docs
+
+Welcome to the JenkinsBeat documentation.
+
+

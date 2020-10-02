@@ -4,6 +4,7 @@
 .DS_Store
 /buildpipelinebeat
 /buildpipelinebeat.test
+buildpipelinebeat.exe
 buildpipelinebeat_*.syso
 *.pyc
 *.exe
@@ -11,4 +12,9 @@ logs/
 mage_output_file.go
 data/
 .vscode/
-vendor/
+examples/
+Dockerfile
+*.md
+.travis.yml
+*.txt
+.gitignore
