@@ -5,6 +5,11 @@ buildpipelinebeat:
   project: fallbackProject
   error: None
 
+# Instant push of events
+queue:
+  mem:
+    flush.min_events: 0
+
 processors:
   - add_cloud_metadata: ~
   - add_docker_metadata: ~
