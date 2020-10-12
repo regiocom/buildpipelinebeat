@@ -13,3 +13,8 @@ buildpipelinebeat:
   project: fallbackProject
   # The Fallback Error
   error: None
+
+# Instant push of events
+queue:
+  mem:
+    flush.min_events: 0

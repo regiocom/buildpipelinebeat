@@ -3,14 +3,23 @@
 ############################# {Beat} ######################################
 
 buildpipelinebeat:
+
   # The Teamname
   team: defaultTeam
+
   # Fallback Buildstatus
   status: Failure
+
   # Pipleine
   pipeline: fallbackPipeline
+
   # Project
   project: fallbackProject
+
   # The Fallback Error
   error: None
-  
+
+# Instant push of events
+queue:
+  mem:
+    flush.min_events: 0

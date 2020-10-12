@@ -14,6 +14,11 @@ buildpipelinebeat:
   # The Fallback Error
   error: None
 
+# Instant push of events
+queue:
+  mem:
+    flush.min_events: 0
+
 # ================================== General ===================================
 
 # The name of the shipper that publishes the network data. It can be used to group
