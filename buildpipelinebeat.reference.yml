@@ -4,6 +4,9 @@
 
 buildpipelinebeat:
 
+  # Closing Timeout
+  closeTimeout: 10
+
   # The Teamname
   team: defaultTeam
 

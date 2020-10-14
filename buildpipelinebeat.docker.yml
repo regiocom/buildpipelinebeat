@@ -1,4 +1,5 @@
 buildpipelinebeat:
+  closeTimeout: 10
   team: defaultTeam
   status: Failure
   pipeline: fallbackPipeline
