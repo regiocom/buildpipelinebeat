@@ -18,74 +18,6 @@ For Development:
 
 ### Usage
 
-#### Jenkins example with Elasticsearch
-
-have a look in the examples directory for more (elasticsearch, logstash, elasticCloud). (they can be combined)
-
-```groovy
-#!/usr/bin/env groovy
-
-def buildpipelinebeat_TeamName = 'defaultTeam'
-def buildpipelinebeat_ProjectName = 'defaultProject'
-def buildpipelinebeat_PipelineName = 'defaultPipeline'
-def buildpipelinebeat_ElasticsearchHosts = 'localhost:5601' /* For multientries use the following sheme:
-  'hostip:port\", \"hostip2:port' */
-
-// the parameter -d "*" (for the beat not docker!) activates the debug mode where the pushed message is printed out to the docker log
-def buildpipelinebeat_BaseString = 'docker run --rm regiocom/buildpipelinebeat:latest -E \"output.elasticsearch.hosts=[ \"${buildpipelinebeat.ElasticsearchHosts}\" ]\" -E \"buildpipelinebeat.team=${buildpipelinebeat_TeamName}\" -E \"buildpipelinebeat.project=${buildpipelinebeat_ProjectName}\" -E \"buildpipelinebeat.pipeline=${buildpipelinebeat_PipelineName}\" -E \"buildpipelinebeat.status='
-
-def notifyStarted() {
-  stage('Notify currently building') {
-    container('docker') {
-      echo "Running buildpipelinebeat"
-      sh "${buildpipelinebeat_BaseString}Building\""
-    }
-  }
-}
-
-def notifySuccess() {
-  stage('Notify successful build') {
-    container('docker') {
-      echo "Running buildpipelinebeat"
-      sh "${buildpipelinebeat_BaseString}Success\""
-    }
-  }
-}
-
-def notifyFailure(error) {
-  stage('Notify failed build') {
-    container('docker') {
-      echo "Running buildpipelinebeat"
-      sh "${buildpipelinebeat_BaseString}Failure\" -E \"buildpipelinebeat.error=${error}\""
-    }
-  }
-}
-
-podTemplate(
-  containers: [
-    containerTemplate(name: 'docker', image: 'docker',  ttyEnabled: true, command: 'cat'
-    ])
-  ],
-) {
-    try {
-      notifyStarted()
-
-      /* ... existing build steps ... */
-
-      notifySuccess()
-    } catch (e) {
-      notifyFailure(e)
-      throw e
-    }
-}
-```
-
-#### Docker
-
-```sh
-docker run --rm regiocom/buildpipelinebeat -E "output.elasticsearch.hosts=[ 'localhost:5601' ]" -E "buildpipelinebeat.team=Teamname" -E "buildpipelinebeat.project=ProjectName" -E "buildpipelinebeat.pipeline=PipelineName" -E "buildpipelinebeat.status=Test" -d "*"
-```
-
 #### Local (for testing)
 
 The Commandline to insert into the jenkinsfile (if you put the binary into a reachable path)
@@ -93,6 +25,24 @@ The Commandline to insert into the jenkinsfile (if you put the binary into a rea
 ```sh
 .\buildpipelinebeat -c buildpipelinebeat.yml -E "buildpipelinebeat.team=Teamname" -E "buildpipelinebeat.project=ProjectName" -E "buildpipelinebeat.pipeline=PipelineName" -E "buildpipelinebeat.status=Test" -d "*"
 ```
+
+#### Docker
+
+```bash
+# substitute HUB and NAME accordingly
+# Log yourself in before pushing
+export DOCKER_HUB=localhost:5001/
+export DOCKER_IMAGENAME=yourname/buildpipelinebeat:latest
+git clone https://github.com/regiocom/buildpipelinebeat
+cd buildpipelinebeat
+docker build -t ${DOCKER_HUB}${DOCKER_IMAGENAME} .
+docker push ${DOCKER_HUB}${DOCKER_IMAGENAME}
+docker run --rm buildpipelinebeat -E "output.elasticsearch.hosts=[ 'localhost:5601' ]" -E "buildpipelinebeat.team=Teamname" -E "buildpipelinebeat.project=ProjectName" -E "buildpipelinebeat.pipeline=PipelineName" -E "buildpipelinebeat.status=Test" -d "*"
+```
+
+#### Jenkins
+
+have a look in the examples directory
 
 ### Clone
 

@@ -39,8 +39,14 @@ func New(b *beat.Beat, cfg *common.Config) (beat.Beater, error) {
 func (bt *buildpipelinebeat) Run(b *beat.Beat) error {
 	logp.Info("buildpipelinebeat is running! Hit CTRL-C to stop it.")
 
+	// Connection Variable
+	CloseTimeout := bt.config.CloseTimeout
+
 	var err error
-	bt.client, err = b.Publisher.Connect()
+	bt.client, err = b.Publisher.ConnectWith(beat.ClientConfig{
+		PublishMode: beat.GuaranteedSend,
+		WaitClose:   CloseTimeout * time.Second,
+	})
 	if err != nil {
 		return err
 	}
@@ -68,7 +74,7 @@ func (bt *buildpipelinebeat) Run(b *beat.Beat) error {
 	// Push the event and stop the beat
 	bt.client.Publish(event)
 	logp.Info("Event sent")
-	close(bt.done)
+	defer close(bt.done)
 	return nil
 }
 

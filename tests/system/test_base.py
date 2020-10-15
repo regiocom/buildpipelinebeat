@@ -14,6 +14,7 @@ class Test(BaseTest):
         )
 
         buildpipelinebeat_proc = self.start_beat()
-        self.wait_until(lambda: self.log_contains("buildpipelinebeat is running"))
+        self.wait_until(lambda: self.log_contains(
+            "buildpipelinebeat is running"))
         exit_code = buildpipelinebeat_proc.kill_and_wait()
         assert exit_code == 0
