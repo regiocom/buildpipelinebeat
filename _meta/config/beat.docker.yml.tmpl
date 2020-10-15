@@ -1,6 +1,12 @@
 buildpipelinebeat:
+  closeTimeout: 10
   team: defaultTeam
   status: Failure
   pipeline: fallbackPipeline
   project: fallbackProject
   error: None
+
+# Instant push of events
+queue:
+  mem:
+    flush.min_events: 0
